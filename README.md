@@ -1,4 +1,4 @@
-# Optimization toolkit package for nonlocal functions
+# Python optimization toolkit package written in cpp for nonlocal functions
 WIP
 
 Contains the following modules:

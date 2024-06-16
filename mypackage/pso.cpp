@@ -13,8 +13,8 @@ namespace py = pybind11;
 template <typename T>
 std::vector<T> pso(
     py::function funct, // The function to be *maximized*
-    std::vector<T> space_min, // Lower bound for the search space
-    std::vector<T> space_max, // Upper bound for the search space
+    std::vector<T> space_min, // Lower bound vector for the search space
+    std::vector<T> space_max, // Upper bound vector for the search space
     int iterations = 100,  // Number of iterations to run the algorithm for
     int swarm_size = 100, // Number of particles in the swarm
     double inertia = 0.5, // Inertia weight - recommended be in (0,1)
@@ -23,14 +23,21 @@ std::vector<T> pso(
     double clamp = 0.1, // Clamping limit on velocity
     int verbose = 1 // Verbosity level - 0 for final output, 1 for output at each iteration
 ) {
-    if (inertia <= 0 || inertia >= 1) {
-        std::cerr << "Inertia outside suggested limits! Recommended be in (0,1)" << std::endl;
+
+    // Warn unusual inputs
+    if (inertia <= 0 || inertia >= 1) {  // If the inertia is outside the suggested limits...
+        std::cerr << "Inertia outside suggested limits! Recommended be in (0,1)" << std::endl; // Prints a warning message
     }
-    if (cognitive <= 1 || cognitive >= 3) {
-        std::cerr << "Cognition factor outside suggested limits! Recommended be in [1,3]" << std::endl;
+    if (cognitive <= 1 || cognitive >= 3) { // If the cognitive factor is outside the suggested limits...
+        std::cerr << "Cognition factor outside suggested limits! Recommended be in [1,3]" << std::endl; // Prints a warning message
     }
-    if (social <= 1 || social >= 3) {
-        std::cerr << "Social factor outside suggested limits! Recommended be in [1,3]" << std::endl;
+    if (social <= 1 || social >= 3) { // If the social factor is outside the suggested limits...
+        std::cerr << "Social factor outside suggested limits! Recommended be in [1,3]" << std::endl; // Prints a warning message
+    }
+
+    // Check for invalid inputs
+    if (space_min.size() != space_max.size()) { // If the space minimum and maximum vectors are not the same size...
+        throw std::invalid_argument("Search space vectors must be of same size!"); // Throw an exception
     }
 
     // Particle class - represents each particle in the swarm, storing its parameters (position), velocity, and value
