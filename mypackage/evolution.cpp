@@ -14,7 +14,7 @@ std::vector<T> evolve(
     py::function fitness, // Fitness function - takes in a set of parameters and returns a fitness value
     py::function mutate,  // Mutation function - takes in a set of parameters and returns a mutated set of parameters
     py::function generate, // Generate function - generates a set of parameters to be used in the initial population (ideally randomly)
-    std::vector<std::vector<T>> seed, // Seed population - a predefined set of parameters to be used in the initial population
+    std::vector<std::vector<T>> seed = std::vector<std::vector<T>>(), // Seed population - a predefined set of parameters to be used in the initial population
     int population_size = 100, // Population size - more is better, but slower
     int reproduction_ct = 10,  // Number of individuals that will reproduce each generation - more leads to more diversity, but slower convergence
     int survivor_ct = 0, // Number of individuals that will survive each generation - more leads to more stability, but could harm diversity
@@ -22,6 +22,7 @@ std::vector<T> evolve(
     int generations = 100, // Number of generations to run the algorithm for
     int verbose = 1 // Verbosity level - 0 for no output, 1 for average and top fitness each generation
 ) {
+    
     // Individual class to store parameters and fitness value
     class Individual {
     public:

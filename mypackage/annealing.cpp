@@ -10,6 +10,19 @@
 
 namespace py = pybind11;
 
+// Metropolis-Hastings algorithm (for the case of T=1 and symmetric proposal distribution)
+// Used commonly for acceptance probability
+double metropolis_hastings(double new_value, double current_value, double temperature) {
+    if (temperature > 1 || temperature <= 0){
+        std::cerr << "Warning: Temperature outside (0,1], temperature scheduling likely incorrect! Current temperature: " << temperature << std::endl;
+    }
+    if (new_value < current_value){
+        return 1.0;
+    }
+    double probability = exp(-(current_value - new_value) / temperature); // Calculate the acceptance probability
+    return probability;
+}
+
 // Simulated annealing algorithm function
 template <typename T>
 std::vector<T> anneal(
@@ -18,10 +31,17 @@ std::vector<T> anneal(
     py::function neighbor,  // Neighbor function - generates a new set of parameters based on the current set
     int iterations = 100,  // Number of iterations to run the algorithm for
     py::function temperature, // Temperature schedule - determines the temperature at each iteration
-    py::function acceptance, // Acceptance probability - determines whether to accept a new set of parameters based on the current set and temperature
+    py::function acceptance = py::none(), // Acceptance probability - determines whether to accept a new set of parameters based on the current set and temperature
     int verbose = 1 // Verbosity level - 0 for final output, 1 for output at each iteration
-
 ) {
+    // If no acceptance function is provided, use Metropolis-Hastings as the default
+    auto default_acceptance = [](double new_val, double current_val, double temp) -> double {
+        return metropolis_hastings(new_val, current_val, temp);
+    };
+
+    // If acceptance is None, use the default acceptance function
+    py::function acceptance_function = acceptance.is_none() ? py::cpp_function(default_acceptance) : acceptance;
+
     // Candidate class to store parameters that have been accepted as well as their values
     class Candidate {
     public:
@@ -60,7 +80,7 @@ std::vector<T> anneal(
             std::cout << "Best value: " << best.value << std::endl; // Output the best value
         }
 
-        double prob = acceptance(new_val, current.value, temp).cast<double>();
+        double prob = acceptance_function(new_val, current.value, temp).cast<double>();
         if (prob < 0.0 || prob > 1.0) { // If the acceptance probability is not within 0 and 1..
             throw std::invalid_argument("Acceptance probability must fall between 0 and 1!"); // Throw an exception
         }
@@ -70,21 +90,8 @@ std::vector<T> anneal(
         }
     }
 
-    std::cout << "Best value: " << best.value << std::endl
+    std::cout << "Best value: " << best.value << std::endl;
     return best.params; // Return the best parameters
-}
-
-// Metropolis-Hastings algorithm (for the case of T=1 and symmetric proposal distribution)
-// Used commonly for acceptance probability
-double metropolis_hastings(double new_value, double current_value, double temperature) {
-    if (temperature > 1 || temperature <= 0){
-        std::cerr << "Warning: Temperature outside (0,1], temperature scheduling likely incorrect! Current temperature: " << temperature << std::endl;
-    }
-    if (new_value < current_value){
-        return 1.0;
-    }
-    double probability = exp(-(current_value - new_value) / temperature); // Calculate the acceptance probability
-    return probability;
 }
 
 PYBIND11_MODULE(operations, m) { // Define the Python module
@@ -99,7 +106,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
         py::arg("temperature"), // Define the temperature schedule function
-        py::arg("acceptance"), // Define the acceptance probability function
+        py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of double inputs" // Define the docstring
     );
@@ -111,7 +118,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
         py::arg("temperature"), // Define the temperature schedule function
-        py::arg("acceptance"), // Define the acceptance probability function
+        py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of integer inputs" // Define the docstring
     );
@@ -123,7 +130,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
         py::arg("temperature"), // Define the temperature schedule function
-        py::arg("acceptance"), // Define the acceptance probability function
+        py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of string inputs" // Define the docstring
     );
