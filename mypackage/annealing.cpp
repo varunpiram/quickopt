@@ -30,7 +30,7 @@ std::vector<T> anneal(
     std::vector<T> initial, // Initial guess - the starting set of parameters for simulated annealing process
     py::function neighbor,  // Neighbor function - generates a new set of parameters based on the current set
     int iterations = 100,  // Number of iterations to run the algorithm for
-    py::function temperature, // Temperature schedule - determines the temperature at each iteration
+    py::function temperature = py::cpp_function([](int) { return 1.0; }), // Temperature schedule - determines the temperature at each iteration
     py::function acceptance = py::none(), // Acceptance probability - determines whether to accept a new set of parameters based on the current set and temperature
     int verbose = 1 // Verbosity level - 0 for final output, 1 for output at each iteration
 ) {
@@ -51,24 +51,24 @@ std::vector<T> anneal(
         Candidate(const std::vector<T>& p, double v) : params(p), value(v) {}
     };
 
-    double iv = funct(initial).cast<double>(); // Calculate the value of the initial guess
+    double iv = funct(initial).template cast<double>(); // Calculate the value of the initial guess
     Candidate current(initial, iv); // Create the current candidate variable, to store the current accepted guess, and set it as the initial guess provided
     Candidate best(initial, iv); // Create the best candidate variable, to store our best guess, and set it as the initial guess provided
 
-    double temp = temperature(0).cast<double>(); // Initial temperature
+    double temp = temperature(0).template cast<double>(); // Initial temperature
     std::mt19937 rng(std::random_device{}()); // Random number generator
     std::uniform_real_distribution<> dist(0.0, 1.0); // Uniform distribution for acceptance probability
 
     // For every iteration...
     for (int iter = 0; iter < iterations; ++iter) {
-        double new_temp = temperature(iter).cast<double>(); // Calculate the temperature for the current iteration
+        double new_temp = temperature(iter).template cast<double>(); // Calculate the temperature for the current iteration
         if (new_temp > temp) {
             std::cerr << "Warning: Temperature must be decreasing. Current temperature: " << new_temp << " Previous temperature: " << temp << std::endl;
         }
         temp = new_temp; // Update the temperature
 
-        std::vector<T> new_params = neighbor(current.params).cast<std::vector<T>>(); // Generate a new set of parameters based on the current set
-        double new_val = funct(new_params).cast<double>(); // Calculate the value of the new set of parameters
+        std::vector<T> new_params = neighbor(current.params).template cast<std::vector<T>>(); // Generate a new set of parameters based on the current set
+        double new_val = funct(new_params).template cast<double>(); // Calculate the value of the new set of parameters
 
         if (new_val < best.value) { // If the new set of parameters is better than the best set of parameters...
             best = Candidate(new_params, new_val); // Set the new set of parameters as the best candidate
@@ -80,7 +80,7 @@ std::vector<T> anneal(
             std::cout << "Best value: " << best.value << std::endl; // Output the best value
         }
 
-        double prob = acceptance_function(new_val, current.value, temp).cast<double>();
+        double prob = acceptance_function(new_val, current.value, temp).template cast<double>();
         if (prob < 0.0 || prob > 1.0) { // If the acceptance probability is not within 0 and 1..
             throw std::invalid_argument("Acceptance probability must fall between 0 and 1!"); // Throw an exception
         }
@@ -94,7 +94,7 @@ std::vector<T> anneal(
     return best.params; // Return the best parameters
 }
 
-PYBIND11_MODULE(operations, m) { // Define the Python module
+PYBIND11_MODULE(annealing, m) { // Define the Python module
     py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
     py::class_<std::vector<int>>(m, "IntVector"); // Define a class for a vector of integers
     py::class_<std::vector<std::string>>(m, "StringVector"); // Define a class for a vector of strings
@@ -105,7 +105,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("initial"), // Define the initial parameters
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
-        py::arg("temperature"), // Define the temperature schedule function
+        py::arg("temperature") = py::cpp_function([](int) { return 1.0; }), // Define the temperature schedule function with a default value
         py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of double inputs" // Define the docstring
@@ -117,7 +117,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("initial"), // Define the initial parameters
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
-        py::arg("temperature"), // Define the temperature schedule function
+        py::arg("temperature") = py::cpp_function([](int) { return 1.0; }), // Define the temperature schedule function with a default value
         py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of integer inputs" // Define the docstring
@@ -129,7 +129,7 @@ PYBIND11_MODULE(operations, m) { // Define the Python module
         py::arg("initial"), // Define the initial parameters
         py::arg("neighbor"), // Define the neighbor generation function
         py::arg("iterations") = 100, // Define the number of iterations
-        py::arg("temperature"), // Define the temperature schedule function
+        py::arg("temperature") = py::cpp_function([](int) { return 1.0; }), // Define the temperature schedule function with a default value
         py::arg("acceptance") = py::none(), // Define the acceptance probability function
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses simulated annealing to minimize a function of string inputs" // Define the docstring

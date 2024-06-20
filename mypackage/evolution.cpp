@@ -114,7 +114,7 @@ std::vector<T> evolve(
     return population[0].params; // Return the parameters of the top individual in the final population
 }
 
-PYBIND11_MODULE(operations, m) { // Define the Python module
+PYBIND11_MODULE(evolution, m) { // Define the Python module
     py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
     py::class_<std::vector<int>>(m, "IntVector"); // Define a class for a vector of integers
     py::class_<std::vector<std::string>>(m, "StringVector"); // Define a class for a vector of strings

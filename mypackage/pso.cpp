@@ -78,7 +78,7 @@ std::vector<T> pso(
             velocity.push_back(dist_velocity(rng)); // Generate a random velocity parameter within the clamping limit
         }
 
-        double value = funct(position).cast<double>(); // Calculate the value of the particle
+        double value = funct(position).template cast<double>(); // Calculate the value of the particle
         
         if(value > gb_val) { // If the value is greater than the global best...
             gb_val = value; // Update the global best value
@@ -105,7 +105,7 @@ std::vector<T> pso(
                 proposed_position.push_back(std::min(std::max(proposed_pos_param, space_min[j]), space_max[j])); // Update the position by adding the new position parameter and using search space limits
             }
 
-            double new_value = funct(proposed_position).cast<double>(); // Calculate the value of the new position
+            double new_value = funct(proposed_position).template cast<double>(); // Calculate the value of the new position
 
             particle.value = new_value; // Update the particle's value
             particle.velocity = proposed_velocity; // Update the velocity
@@ -130,7 +130,7 @@ std::vector<T> pso(
     return gb_pos; // Return the global best position
 }
 
-PYBIND11_MODULE(operations, m) { // Define the Python module
+PYBIND11_MODULE(pso, m) { // Define the Python module
     py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
 
     // Define a function to maximize a function of doubles

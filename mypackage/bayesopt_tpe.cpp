@@ -80,7 +80,7 @@ std::vector<T> bayesopt_tpe(
             for (size_t j = 0; j < space_min.size(); j++) {
                 parameters[j] = distributions[j](rng);
             }
-            double eval = funct(parameters).cast<double>();
+            double eval = funct(parameters).template cast<double>();
             if (eval < bestValue) {
                 bestValue = eval;
                 bestParameters = parameters;
@@ -90,7 +90,7 @@ std::vector<T> bayesopt_tpe(
     }
 
     std::vector<Candidate> good;
-    int toReserve = static_cast<int>(std::floor(samples / splitting(samples).cast<double>()));
+    int toReserve = static_cast<int>(std::floor(samples / splitting(samples).template cast<double>()));
     good.reserve(toReserve);
     std::vector<Candidate> bad;
     bad.reserve(samples - toReserve);
@@ -183,13 +183,13 @@ std::vector<T> bayesopt_tpe(
         }
 
         for (Candidate& c : good) {
-            c.weight = weight(true, good, bad, c).cast<double>();
+            c.weight = weight(true, good, bad, c).template cast<double>();
         }
         for (Candidate& c : bad) {
-            c.weight = weight(false, good, bad, c).cast<double>();
+            c.weight = weight(false, good, bad, c).template cast<double>();
         }
 
-        double w0 = weight_base(good, bad).cast<double>();
+        double w0 = weight_base(good, bad).template cast<double>();
 
         auto acquisition = [&good, &bad, &kde, &nIp, w0](const std::vector<double>& params) -> double {
             double goodAcq = kde(params, good);
@@ -220,7 +220,7 @@ std::vector<T> bayesopt_tpe(
         }
 
         std::vector<T> newParameters(bestSample.begin(), bestSample.end());
-        double eval = funct(newParameters).cast<double>();
+        double eval = funct(newParameters).template cast<double>();
         if (eval < bestValue) {
             bestValue = eval;
             bestParameters = newParameters;
@@ -242,7 +242,7 @@ std::vector<T> bayesopt_tpe(
     return bestParameters;
 }
 
-PYBIND11_MODULE(operations, m) {
+PYBIND11_MODULE(bayesopt_tpe, m) {
     py::class_<std::vector<double>>(m, "DoubleVector");
 
     m.def("bayesopt_tpe", &bayesopt_tpe<double>,
