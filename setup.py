@@ -1,46 +1,100 @@
-from setuptools import setup
-from pybind11.setup_helpers import Pybind11Extension, build_ext
-from pybind11 import get_include
+from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
+import sys
+import setuptools
+
+class get_pybind_include(object):
+    """Helper class to determine the pybind11 include path.
+    The purpose of this class is to postpone importing pybind11
+    until it is actually installed, so that the ``get_include()``
+    method can be invoked. """
+    
+    def __init__(self, user=False):
+        self.user = user
+
+    def __str__(self):
+        import pybind11
+        return pybind11.get_include(self.user)
 
 ext_modules = [
-    Pybind11Extension(
-        "mypackage.annealing",
-        ["mypackage/annealing.cpp"],
+    Extension(
+        'mypackage.common',
+        ['src/common.cpp'],
         include_dirs=[
-            get_include(),  # Path to pybind11 headers
+            get_pybind_include(),
+            get_pybind_include(user=True),
+            "/Users/varunpiram/miniconda3/include/python3.9",
+            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
-        language='c++'
+        language='c++',
+        extra_compile_args=['-std=c++17'],
     ),
-    Pybind11Extension(
-        "mypackage.evolution",
-        ["mypackage/evolution.cpp"],
+    Extension(
+        'mypackage.annealing',
+        ['src/annealing.cpp'],
         include_dirs=[
-            get_include(),  # Path to pybind11 headers
+            get_pybind_include(),
+            get_pybind_include(user=True),
+            "/Users/varunpiram/miniconda3/include/python3.9",
+            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
-        language='c++'
+        depends=['src/common.cpp'],
+        language='c++',
+        extra_compile_args=['-std=c++17'],
     ),
-    Pybind11Extension(
-        "mypackage.bayesopt_tpe",
-        ["mypackage/bayesopt_tpe.cpp"],
+    Extension(
+        'mypackage.bayesopt_tpe',
+        ['src/bayesopt_tpe.cpp'],
         include_dirs=[
-            get_include(),  # Path to pybind11 headers
+            get_pybind_include(),
+            get_pybind_include(user=True),
+            "/Users/varunpiram/miniconda3/include/python3.9",
+            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
-        language='c++'
+        depends=['src/common.cpp'],
+        language='c++',
+        extra_compile_args=['-std=c++17'],
     ),
-    Pybind11Extension(
-        "mypackage.pso",
-        ["mypackage/pso.cpp"],
+    Extension(
+        'mypackage.evolution',
+        ['src/evolution.cpp'],
         include_dirs=[
-            get_include(),  # Path to pybind11 headers
+            get_pybind_include(),
+            get_pybind_include(user=True),
+            "/Users/varunpiram/miniconda3/include/python3.9",
+            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
-        language='c++'
+        depends=['src/common.cpp'],
+        language='c++',
+        extra_compile_args=['-std=c++17'],
     ),
+    Extension(
+        'mypackage.pso',
+        ['src/pso.cpp'],
+        include_dirs=[
+            get_pybind_include(),
+            get_pybind_include(user=True),
+            "/Users/varunpiram/miniconda3/include/python3.9",
+            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
+        ],
+        depends=['src/common.cpp'],
+        language='c++',
+        extra_compile_args=['-std=c++17'],
+    )
 ]
 
 setup(
     name='mypackage',
     version='0.1.0',
     author='Varun Piram',
-    cmdclass={'build_ext': build_ext},
+    author_email='varunpiram@gmail.com',
+    description='A Python package for various optimization algorithms implemented in C++',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     ext_modules=ext_modules,
+    install_requires=[
+        'pybind11>=2.5.0',
+    ],
+    cmdclass={'build_ext': build_ext},
+    zip_safe=False,
 )

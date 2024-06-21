@@ -243,8 +243,6 @@ std::vector<T> bayesopt_tpe(
 }
 
 PYBIND11_MODULE(bayesopt_tpe, m) {
-    py::class_<std::vector<double>>(m, "DoubleVector");
-
     m.def("bayesopt_tpe", &bayesopt_tpe<double>,
         py::arg("funct"),
         py::arg("space_min"),

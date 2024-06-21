@@ -131,7 +131,6 @@ std::vector<T> pso(
 }
 
 PYBIND11_MODULE(pso, m) { // Define the Python module
-    py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
 
     // Define a function to maximize a function of doubles
     m.def("pso", &pso<double>,

@@ -1,4 +1,11 @@
-test.py
-.git
-build
-
+*.pyc
+__pycache__/
+*.so
+*.o
+*.dylib
+*.dll
+*.pyd
+*.pdb
+build/
+dist/
+mypackage.egg-info/

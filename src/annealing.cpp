@@ -19,7 +19,7 @@ double metropolis_hastings(double new_value, double current_value, double temper
     if (new_value < current_value){
         return 1.0;
     }
-    double probability = exp(-(current_value - new_value) / temperature); // Calculate the acceptance probability
+    double probability = exp(-(new_value - current_value) / temperature); // Calculate the acceptance probability
     return probability;
 }
 
@@ -95,10 +95,6 @@ std::vector<T> anneal(
 }
 
 PYBIND11_MODULE(annealing, m) { // Define the Python module
-    py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
-    py::class_<std::vector<int>>(m, "IntVector"); // Define a class for a vector of integers
-    py::class_<std::vector<std::string>>(m, "StringVector"); // Define a class for a vector of strings
-
     // Define a function to minimize a function of doubles
     m.def("anneal_double", &anneal<double>,
         py::arg("funct"), // Define the function to be minimized

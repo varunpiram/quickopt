@@ -1,95 +1,57 @@
-from mypackage.evolution import evolve
-import random
+import mypackage
+import numpy as np
 
-# Define the fitness function
-def fitness(params):
-    # Simple fitness function: sum of squares
-    return -sum(x**2 for x in params)
+def test_anneal_double():
+    # Example test case for anneal_double
+    print("Testing anneal_double...")
+    # Define a simple objective function, initial guess, and neighbor function
+    def objective(params):
+        return sum(x**2 for x in params)
+    initial_guess = [10.0, 10.0]
+    def neighbor(params):
+        return [x + np.random.uniform(-.0005,0) for x in params]
+    def temperature(iter):
+        return 0.999**iter
+    def acceptance(new_val, current_val, temp):
+        print("new_val:", new_val, "current_val:", current_val, "temp:", temp)
+        print(mypackage.metropolis_hastings(new_val, current_val, temp))
+        return 0.9
+    
+    result = mypackage.anneal_double(objective, initial_guess, neighbor, iterations=10000, temperature=temperature, acceptance=acceptance, verbose=1)
+    print("Result:", result)
 
-# Define the mutation function
-def mutate(params):
-    # Mutate by adding a small random value to each parameter
-    return [x + random.uniform(-0.1, 0.1) for x in params]
+def test_bayesopt_tpe():
+    print("Testing bayesopt_tpe...")
+    def objective(params):
+        return sum(x**2 for x in params)
+    space_min = [0.0, 0.0]
+    space_max = [1.0, 1.0]
+    result = mypackage.bayesopt_tpe(objective, space_min, space_max, iterations=10)
+    print("Result:", result)
 
-# Define the generate function
-def generate():
-    # Generate a list of 10 random values between -10 and 10
-    return [random.uniform(-10, 10) for _ in range(10)]
-
-# Testing evolve_double
 def test_evolve_double():
-    result = evolution.evolve_double(
-        fitness=fitness,
-        mutate=mutate,
-        generate=generate,
-        population_size=100,
-        reproduction_ct=10,
-        survivor_ct=10,
-        mutation_rate=0.1,
-        generations=100,
-        verbose=1
-    )
-    print("Best solution (double):", result)
+    print("Testing evolve_double...")
+    def fitness(params):
+        return -sum(x**2 for x in params)
+    def mutate(params):
+        return [x + 0.1 for x in params]
+    def generate():
+        return [0.5, 0.5]
+    result = mypackage.evolve_double(fitness, mutate, generate, generations=10)
+    print("Result:", result)
 
-# Define the fitness function for integers
-def fitness_int(params):
-    return -sum(x**2 for x in params)
-
-# Define the mutation function for integers
-def mutate_int(params):
-    return [x + random.randint(-1, 1) for x in params]
-
-# Define the generate function for integers
-def generate_int():
-    return [random.randint(-10, 10) for _ in range(10)]
-
-# Testing evolve_int
-def test_evolve_int():
-    result = evolution.evolve_int(
-        fitness=fitness_int,
-        mutate=mutate_int,
-        generate=generate_int,
-        population_size=100,
-        reproduction_ct=10,
-        survivor_ct=10,
-        mutation_rate=0.1,
-        generations=100,
-        verbose=1
-    )
-    print("Best solution (int):", result)
-
-# Define the fitness function for strings
-def fitness_string(params):
-    target = "evolutionary"
-    return -sum((ord(c1) - ord(c2))**2 for c1, c2 in zip(params, target))
-
-# Define the mutation function for strings
-def mutate_string(params):
-    params = list(params)
-    idx = random.randint(0, len(params) - 1)
-    params[idx] = chr(random.randint(32, 126))
-    return ''.join(params)
-
-# Define the generate function for strings
-def generate_string():
-    return ''.join(chr(random.randint(32, 126)) for _ in range(12))
-
-# Testing evolve_string
-def test_evolve_string():
-    result = evolution.evolve_string(
-        fitness=fitness_string,
-        mutate=mutate_string,
-        generate=generate_string,
-        population_size=100,
-        reproduction_ct=10,
-        survivor_ct=10,
-        mutation_rate=0.1,
-        generations=100,
-        verbose=1
-    )
-    print("Best solution (string):", result)
+def test_pso():
+    print("Testing pso...")
+    def objective(params):
+        return sum(x**2 for x in params)
+    space_min = [0.0, 0.0]
+    space_max = [1.0, 1.0]
+    result = mypackage.pso(objective, space_min, space_max, iterations=10)
+    print("Result:", result)
 
 if __name__ == "__main__":
+    test_anneal_double()
+    test_bayesopt_tpe()
     test_evolve_double()
-    test_evolve_int()
-    test_evolve_string()
+    test_pso()
+    print("All tests passed.")

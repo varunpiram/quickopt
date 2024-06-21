@@ -115,10 +115,6 @@ std::vector<T> evolve(
 }
 
 PYBIND11_MODULE(evolution, m) { // Define the Python module
-    py::class_<std::vector<double>>(m, "DoubleVector"); // Define a class for a vector of doubles
-    py::class_<std::vector<int>>(m, "IntVector"); // Define a class for a vector of integers
-    py::class_<std::vector<std::string>>(m, "StringVector"); // Define a class for a vector of strings
-
     // Define a function to optimize a function of doubles
     m.def("evolve_double", &evolve<double>,
         py::arg("fitness"), // Define the fitness function argument
