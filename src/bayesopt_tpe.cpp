@@ -29,10 +29,10 @@ std::vector<T> bayesopt_tpe(
     py::function weight_base = py::none(),
     const std::vector<std::pair<std::vector<double>, double>>& seed = std::vector<std::pair<std::vector<double>, double>>()
 ) {
-    if (splitting.is_none() && threshold > std::sqrt(samples)) {
+    if ((splitting == py::none()) && threshold > std::sqrt(samples)) {
         throw std::invalid_argument("Threshold value must be at most √(samples)!");
     }
-    if (splitting.is_none() && threshold <= 0) {
+    if ((splitting == py::none()) && threshold <= 0) {
         throw std::invalid_argument("Threshold value must be positive!");
     }
 
@@ -60,7 +60,7 @@ std::vector<T> bayesopt_tpe(
         return threshold / std::sqrt(static_cast<double>(group_size));
     };
 
-    splitting = splitting.is_none() ? py::cpp_function(default_splitting) : splitting;
+    splitting = (splitting == py::none()) ? py::cpp_function(default_splitting) : splitting;
 
     std::vector<Candidate> dataset;
     dataset.reserve(samples);
@@ -70,6 +70,7 @@ std::vector<T> bayesopt_tpe(
     }
 
     double bestValue = std::numeric_limits<double>::max();
+
     std::vector<T> bestParameters(space_min.size(), 0);
 
     for (int i = 0; i < samples; i++) {
@@ -129,8 +130,8 @@ std::vector<T> bayesopt_tpe(
         return baseweight / good.size();
     };
 
-    weight = weight.is_none() ? py::cpp_function(weight_default) : weight;
-    weight_base = weight_base.is_none() ? py::cpp_function(weight_base_default) : weight_base;
+    weight = (weight == py::none()) ? py::cpp_function(weight_default) : weight;
+    weight_base = (weight_base == py::none()) ? py::cpp_function(weight_base_default) : weight_base;
 
     auto nonInformativePrior = [&space_min, &space_max](double param, int ind) -> double {
         double left = space_min[ind];
