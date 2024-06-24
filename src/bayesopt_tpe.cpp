@@ -57,7 +57,7 @@ std::vector<T> bayesopt_tpe(
     };
 
     auto default_splitting = [threshold](double group_size) -> double {
-        return threshold / std::sqrt(group_size);
+        return threshold / std::sqrt(static_cast<double>(group_size));
     };
 
     splitting = splitting.is_none() ? py::cpp_function(default_splitting) : splitting;
