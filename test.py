@@ -26,7 +26,7 @@ def test_bayesopt_tpe():
         return sum(x**2 for x in params)
     space_min = [0.0, 0.0]
     space_max = [1.0, 1.0]
-    result = mypackage.bayesopt_tpe(objective, space_min, space_max, iterations=10)
+    result = mypackage.bayesopt_tpe(objective, space_min, space_max, iterations=17, samples=11, verbose=1)
     print("Result:", result)
 
 def test_evolve_double():
@@ -50,8 +50,8 @@ def test_pso():
     print("Result:", result)
 
 if __name__ == "__main__":
-    test_anneal_double()
+    #test_anneal_double()
     # test_bayesopt_tpe()
-    # test_evolve_double()
+    test_evolve_double()
     # test_pso()
     # print("All tests passed.")

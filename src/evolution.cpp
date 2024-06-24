@@ -120,7 +120,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
-        py::arg("seed"), // Define the seed argument
+        py::arg("seed") = std::vector<std::vector<double>>(), // Define the seed argument
         py::arg("population_size") = 100, // Define the population size argument with a default value of 100
         py::arg("reproduction_ct") = 10, // Define the reproduction count argument with a default value of 10
         py::arg("survivor_ct") = 0, // Define the survivor count argument with a default value of 0
@@ -135,7 +135,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
-        py::arg("seed"), // Define the seed argument
+        py::arg("seed") = std::vector<std::vector<int>>(), // Define the seed argument
         py::arg("population_size") = 100, // Define the population size argument with a default value of 100
         py::arg("reproduction_ct") = 10, // Define the reproduction count argument with a default value of 10
         py::arg("survivor_ct") = 0, // Define the survivor count argument with a default value of 0
@@ -150,7 +150,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
-        py::arg("seed"), // Define the seed argument
+        py::arg("seed") = std::vector<std::vector<std::string>>(), // Define the seed argument
         py::arg("population_size") = 100, // Define the population size argument with a default value of 100
         py::arg("reproduction_ct") = 10, // Define the reproduction count argument with a default value of 10
         py::arg("survivor_ct") = 0, // Define the survivor count argument with a default value of 0

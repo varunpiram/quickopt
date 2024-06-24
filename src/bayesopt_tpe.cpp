@@ -24,15 +24,31 @@ std::vector<T> bayesopt_tpe(
     int group_cap = 9999,
     std::vector<double> bandwidth = std::vector<double>(),
     int prior_weight = 1,
-    py::function splitting = py::none(),
-    py::function weight = py::none(),
-    py::function weight_base = py::none(),
+    py::function splitting = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
+    py::function weight = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
+    py::function weight_base = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
     const std::vector<std::pair<std::vector<double>, double>>& seed = std::vector<std::pair<std::vector<double>, double>>()
 ) {
-    if ((splitting == py::none()) && threshold > std::sqrt(samples)) {
+
+    if (threshold > std::sqrt(samples)) {
         throw std::invalid_argument("Threshold value must be at most √(samples)!");
     }
-    if ((splitting == py::none()) && threshold <= 0) {
+    if (threshold <= 0) {
         throw std::invalid_argument("Threshold value must be positive!");
     }
 
@@ -60,7 +76,9 @@ std::vector<T> bayesopt_tpe(
         return threshold / std::sqrt(static_cast<double>(group_size));
     };
 
-    splitting = (splitting == py::none()) ? py::cpp_function(default_splitting) : splitting;
+    if(splitting(1234567890).cast<int>() == 2 * 1234567890){
+        splitting = py::cpp_function(default_splitting);
+    }
 
     std::vector<Candidate> dataset;
     dataset.reserve(samples);
@@ -130,8 +148,14 @@ std::vector<T> bayesopt_tpe(
         return baseweight / good.size();
     };
 
-    weight = (weight == py::none()) ? py::cpp_function(weight_default) : weight;
-    weight_base = (weight_base == py::none()) ? py::cpp_function(weight_base_default) : weight_base;
+    if(weight(1234567890).cast<int>() == 2 * 1234567890){
+        weight = py::cpp_function(weight_default);
+    }
+
+
+    if(weight_base(1234567890).cast<int>() == 2 * 1234567890){
+        weight_base = py::cpp_function(weight_base_default);
+    }
 
     auto nonInformativePrior = [&space_min, &space_max](double param, int ind) -> double {
         double left = space_min[ind];
@@ -256,9 +280,24 @@ PYBIND11_MODULE(bayesopt_tpe, m) {
         py::arg("group_cap") = 9999,
         py::arg("bandwidth") = std::vector<double>(),
         py::arg("prior_weight") = 1,
-        py::arg("splitting") = py::none(),
-        py::arg("weight") = py::none(),
-        py::arg("weight_base") = py::none(),
+        py::arg("splitting") = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
+        py::arg("weight") = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
+        py::arg("weight_base") = py::cpp_function([](int key){
+        if (key == 1234567890) {
+            return 2 * 1234567890;
+        }
+        return key;
+    }),
         py::arg("seed") = std::vector<std::pair<std::vector<double>, double>>(),
         "Uses Bayesian Optimization with Tree-structured Parzen Estimator to find the minimum of a function"
     );
