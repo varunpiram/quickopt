@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 #include <limits>
+#include <type_traits>
 
 namespace py = pybind11;
 
@@ -45,12 +46,17 @@ std::vector<T> bayesopt_tpe(
     const std::vector<std::pair<std::vector<double>, double>>& seed = std::vector<std::pair<std::vector<double>, double>>()
 ) {
 
+
+    std::cout << "Bayesian Optimization using Tree-structured Parzen Estimator (TPE) algorithm" << std::endl;
+
     if (threshold > std::sqrt(samples)) {
         throw std::invalid_argument("Threshold value must be at most √(samples)!");
     }
     if (threshold <= 0) {
         throw std::invalid_argument("Threshold value must be positive!");
     }
+
+    std::cout << "Initial checks passed!" << threshold << std::endl;
 
     bool dynam = false;
     if (bandwidth.empty()){
@@ -59,6 +65,8 @@ std::vector<T> bayesopt_tpe(
             bandwidth.push_back(((space_max[i] - space_min[i]) / 5) * (1 / (pow(samples, (space_min.size() * 4)))));
         }
     }
+
+    std::cout << "Default bandwidth set!" << std::endl;
 
     std::mt19937 rng(std::random_device{}());
 
@@ -72,24 +80,38 @@ std::vector<T> bayesopt_tpe(
             : parameters(p), value(val), weight(w) {}
     };
 
+    std::cout << "Candidate class created!" << std::endl;
+
     auto default_splitting = [threshold](double group_size) -> double {
         return threshold / std::sqrt(static_cast<double>(group_size));
     };
+
+    std::cout << "Default splitting function created!" << std::endl;
 
     if(splitting(1234567890).cast<int>() == 2 * 1234567890){
         splitting = py::cpp_function(default_splitting);
     }
 
+    std::cout << "Default splitting function set!" << std::endl;
+
     std::vector<Candidate> dataset;
     dataset.reserve(samples);
+
+    std::cout << "Dataset created!" << std::endl;
+
+
     std::vector<std::uniform_real_distribution<T>> distributions;
     for (size_t j = 0; j < space_min.size(); j++) {
         distributions.emplace_back(space_min[j], space_max[j]);
     }
 
+    std::cout << "Distributions created!" << std::endl;
+
     double bestValue = std::numeric_limits<double>::max();
 
     std::vector<T> bestParameters(space_min.size(), 0);
+
+    std::cout << "Best value and parameters initialized!" << std::endl;
 
     for (int i = 0; i < samples; i++) {
         if (i < seed.size()) {
@@ -108,13 +130,22 @@ std::vector<T> bayesopt_tpe(
         }
     }
 
+    std::cout << "Initial dataset created!" << std::endl;
+
     std::vector<Candidate> good;
-    int toReserve = static_cast<int>(std::floor(samples / splitting(samples).template cast<double>()));
-    good.reserve(toReserve);
     std::vector<Candidate> bad;
+
+    int toReserve = static_cast<int>(std::floor(samples * (splitting(samples)).cast<double>())); // Was having some issues with this calculation
+
+    good.reserve(toReserve);
+
     bad.reserve(samples - toReserve);
 
+    std::cout << "Good and bad vectors created!" << std::endl;
+
     std::unordered_map<int, double> denom_dict;
+
+    std::cout << "Denominator dictionary created!" << std::endl;
 
     auto denom_weight = [&denom_dict](const std::vector<Candidate>& good) -> double {
         int good_size = good.size();
@@ -132,6 +163,8 @@ std::vector<T> bayesopt_tpe(
         return denominator;
     };
 
+    std::cout << "Denominator weight function created!" << std::endl;
+
     auto weight_default = [&denom_weight](bool isGood, const std::vector<Candidate>& good, const std::vector<Candidate>& bad, const Candidate& c) -> double {
         if (!isGood) {
             return 1.0 / (bad.size() + 1);
@@ -139,6 +172,8 @@ std::vector<T> bayesopt_tpe(
         double denominator = denom_weight(good);
         return (good.back().value - c.value) / denominator;
     };
+
+    std::cout << "Weight function created!" << std::endl;
 
     auto weight_base_default = [&denom_weight](const std::vector<Candidate>& good, const std::vector<Candidate>& bad) -> double {
         double baseweight = 0;
@@ -148,14 +183,20 @@ std::vector<T> bayesopt_tpe(
         return baseweight / good.size();
     };
 
+    std::cout << "Default base weight function created!" << std::endl;
+
     if(weight(1234567890).cast<int>() == 2 * 1234567890){
         weight = py::cpp_function(weight_default);
     }
+
+    std::cout << "Default weight function set!" << std::endl;
 
 
     if(weight_base(1234567890).cast<int>() == 2 * 1234567890){
         weight_base = py::cpp_function(weight_base_default);
     }
+
+    std::cout << "Default base weight function set!" << std::endl;
 
     auto nonInformativePrior = [&space_min, &space_max](double param, int ind) -> double {
         double left = space_min[ind];
@@ -167,6 +208,8 @@ std::vector<T> bayesopt_tpe(
         return pdf;
     };
 
+    std::cout << "Non-informative prior function created!" << std::endl;
+
     auto nIp = [&nonInformativePrior, prior_weight](const std::vector<double>& params) -> double {
         double runningProd = 1;
         for (size_t i = 0; i < params.size(); i++) {
@@ -175,10 +218,14 @@ std::vector<T> bayesopt_tpe(
         return runningProd * prior_weight;
     };
 
+    std::cout << "Non-informative prior (general) function created!" << std::endl;
+
     auto gaussianKernel = [](double x, double xn, double bandwidth) -> double {
         return (1.0 / std::sqrt(2 * M_PI * bandwidth * bandwidth)) *
                std::exp(-std::pow(x - xn, 2) / (2 * bandwidth * bandwidth));
     };
+
+    std::cout << "Gaussian kernel function created!" << std::endl;
 
     auto kde = [&gaussianKernel, &bandwidth](const std::vector<double>& params, const std::vector<Candidate>& candidates) -> double {
         double runningSum = 0;
@@ -192,7 +239,10 @@ std::vector<T> bayesopt_tpe(
         return runningSum / candidates.size();
     };
 
+    std::cout << "Kernel density estimation function created!" << std::endl;
+
     for (int i = 0; i < iterations; i++) {
+
         std::sort(dataset.begin(), dataset.end(), [](const Candidate& a, const Candidate& b) {
             return a.value < b.value;
         });

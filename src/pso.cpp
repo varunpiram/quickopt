@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -6,6 +7,7 @@
 #include <stdexcept>
 #include <vector>
 #include <limits>
+#include <type_traits>
 
 namespace py = pybind11;
 
@@ -142,7 +144,7 @@ PYBIND11_MODULE(pso, m) { // Define the Python module
         py::arg("inertia") = 0.5, // Define the inertia weight
         py::arg("cognitive") = 1.0, // Define the cognitive weight
         py::arg("social") = 2.0, // Define the social weight
-        py::arg("clamp") = 1, // Define the clamping limit on velocity
+        py::arg("clamp") = 0.1, // Define the clamping limit on velocity
         py::arg("verbose") = 1, // Define the verbosity with a default value of 1
         "Uses particle swarm optimization to maximize a function of double inputs" // Define the docstring
     );

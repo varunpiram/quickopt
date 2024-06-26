@@ -51,7 +51,7 @@ def test_pso():
 
 if __name__ == "__main__":
     #test_anneal_double()
-    # test_bayesopt_tpe()
-    test_evolve_double()
+    test_bayesopt_tpe()
+    # test_evolve_double()
     # test_pso()
     # print("All tests passed.")
