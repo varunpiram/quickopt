@@ -10,20 +10,7 @@
 
 namespace py = pybind11;
 
-// Metropolis-Hastings algorithm (for the case of T=1 and symmetric proposal distribution)
-// Used commonly for acceptance probability
-double metropolis_hastings(double new_value, double current_value, double temperature) {
-    if (temperature > 1 || temperature <= 0){
-        std::cerr << "Warning: Temperature outside (0,1], temperature scheduling likely incorrect! Current temperature: " << temperature << std::endl;
-    }
-    if (new_value < current_value){
-        return 1.0;
-    }
-    double probability = exp(-(new_value - current_value) / temperature); // Calculate the acceptance probability
-    return probability;
-}
-
-// Simulated annealing algorithm function
+// Modular simulated annealing algorithm
 template <typename T>
 std::vector<T> anneal(
     py::function funct, // The function to be minimized
@@ -145,11 +132,4 @@ PYBIND11_MODULE(annealing, m) { // Define the Python module
         "Uses simulated annealing to minimize a function of string inputs" // Define the docstring
     );
 
-    // Define the metropolis-hastings function
-    m.def("metropolis_hastings", &metropolis_hastings,
-        py::arg("new_value"), // Define the new value
-        py::arg("current_value"), // Define the current value
-        py::arg("temperature"), // Define the temperature
-        "Calculates the acceptance probability using the Metropolis-Hastings algorithm under typical conditions" // Define the docstring
-    );
 }

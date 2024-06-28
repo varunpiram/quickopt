@@ -13,10 +13,6 @@ def test_anneal_double():
         return [x + np.random.uniform(-.0005,0) for x in params]
     def temperature(iter):
         return 1 / (iter + 1)
-    def acceptance(new_val, current_val, temp):
-        print("new_val:", new_val, "current_val:", current_val, "temp:", temp)
-        print(mypackage.metropolis_hastings(new_val, current_val, temp))
-        return 0.9
     
     result = mypackage.anneal_double(objective, initial_guess, neighbor, iterations=10000, verbose=1, temperature=temperature)
     print("Result:", result)
@@ -83,6 +79,6 @@ def test_pso():
 if __name__ == "__main__":
     # test_anneal_double()
     test_bayesopt_tpe()
-    # test_evolve_double()
-    # test_pso()
+    #test_evolve_double()
+    #test_pso()
     # print("All tests passed.")
