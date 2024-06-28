@@ -1,7 +1,7 @@
-# quickopt
+# _quickopt_
 A Python optimization toolkit developed in C++ geared towards nonlocal optimization problems.
 
-## Documentation: [Click Here!](https://google.com)
+# Documentation: [Click Here!](https://google.com)
 Most of the information is found in the documentation - please refer to it! Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here.
 
 ## Installation
