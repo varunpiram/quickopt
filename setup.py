@@ -18,7 +18,7 @@ class get_pybind_include(object):
 
 ext_modules = [
     Extension(
-        'mypackage.common',
+        'quickopt.common',
         ['src/common.cpp'],
         include_dirs=[
             get_pybind_include(),
@@ -30,7 +30,7 @@ ext_modules = [
         extra_compile_args=['-std=c++17'],
     ),
     Extension(
-        'mypackage.annealing',
+        'quickopt.annealing',
         ['src/annealing.cpp'],
         include_dirs=[
             get_pybind_include(),
@@ -43,7 +43,7 @@ ext_modules = [
         extra_compile_args=['-std=c++17'],
     ),
     Extension(
-        'mypackage.bayesopt_tpe',
+        'quickopt.bayesopt_tpe',
         ['src/bayesopt_tpe.cpp'],
         include_dirs=[
             get_pybind_include(),
@@ -56,8 +56,8 @@ ext_modules = [
         extra_compile_args=['-std=c++17'],
     ),
     Extension(
-        'mypackage.evolution',
-        ['src/evolution.cpp'],
+        'quickopt.genetic',
+        ['src/genetic.cpp'],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
@@ -69,7 +69,7 @@ ext_modules = [
         extra_compile_args=['-std=c++17'],
     ),
     Extension(
-        'mypackage.pso',
+        'quickopt.pso',
         ['src/pso.cpp'],
         include_dirs=[
             get_pybind_include(),
@@ -84,11 +84,11 @@ ext_modules = [
 ]
 
 setup(
-    name='mypackage',
+    name='quickopt',
     version='0.1.0',
     author='Varun Piram',
     author_email='varunpiram@gmail.com',
-    description='A Python package for various optimization algorithms implemented in C++',
+    description='A Python optimization toolkit focused on nonlocal optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     ext_modules=ext_modules,

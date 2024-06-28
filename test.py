@@ -1,4 +1,4 @@
-import mypackage
+import quickopt
 import math
 import numpy as np
 
@@ -14,7 +14,7 @@ def test_anneal_double():
     def temperature(iter):
         return 1 / (iter + 1)
     
-    result = mypackage.anneal_double(objective, initial_guess, neighbor, iterations=10000, verbose=1, temperature=temperature)
+    result = quickopt.anneal_double(objective, initial_guess, neighbor, iterations=10000, verbose=1, temperature=temperature)
     print("Result:", result)
 
 def test_bayesopt_tpe():
@@ -51,19 +51,19 @@ def test_bayesopt_tpe():
     upper_bounds = [1.0, 5.0, 5.0, 5.0, 5.0, 10.0, 10.0, 10.0, 5.0, 5.0, 5.0, 5.0]
 
 
-    result = mypackage.bayesopt_tpe(objective, lower_bounds, upper_bounds, iterations=100, samples=500, verbose=1)
+    result = quickopt.bayesopt_tpe(objective, lower_bounds, upper_bounds, iterations=100, samples=500, verbose=1)
     print("Result:", result)
     print("Best value:", objective(result))
 
-def test_evolve_double():
-    print("Testing evolve_double...")
+def test_genetic_double():
+    print("Testing genetic_double...")
     def fitness(params):
         return -sum(x**2 for x in params)
     def mutate(params):
         return [x + 0.1 for x in params]
     def generate():
         return [0.5, 0.5]
-    result = mypackage.evolve_double(fitness, mutate, generate, generations=10)
+    result = quickopt.genetic_double(fitness, mutate, generate, generations=10)
     print("Result:", result)
 
 def test_pso():
@@ -73,12 +73,12 @@ def test_pso():
     space_min = [-1.0, -1.0]
     space_max = [1.0, 1.0]
 
-    result = mypackage.pso(objective, space_min, space_max, iterations=10)
+    result = quickopt.pso(objective, space_min, space_max, iterations=10)
     print("Result:", result)
 
 if __name__ == "__main__":
     # test_anneal_double()
-    test_bayesopt_tpe()
-    #test_evolve_double()
+    # test_bayesopt_tpe()
+    test_genetic_double()
     #test_pso()
     # print("All tests passed.")

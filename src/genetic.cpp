@@ -8,9 +8,9 @@
 
 namespace py = pybind11;
 
-// Evolutionary algorithm function
+// Genetic algorithm function
 template <typename T>
-std::vector<T> evolve(
+std::vector<T> genetic(
     py::function fitness, // Fitness function - takes in a set of parameters and returns a fitness value
     py::function mutate,  // Mutation function - takes in a set of parameters and returns a mutated set of parameters
     py::function generate, // Generate function - generates a set of parameters to be used in the initial population (ideally randomly)
@@ -114,9 +114,9 @@ std::vector<T> evolve(
     return population[0].params; // Return the parameters of the top individual in the final population
 }
 
-PYBIND11_MODULE(evolution, m) { // Define the Python module
+PYBIND11_MODULE(genetic, m) { // Define the Python module
     // Define a function to optimize a function of doubles
-    m.def("evolve_double", &evolve<double>,
+    m.def("genetic_double", &genetic<double>,
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
@@ -131,7 +131,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
     );
 
     // Define a function to optimize a function of integers
-    m.def("evolve_int", &evolve<int>,
+    m.def("genetic_int", &genetic<int>,
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
@@ -146,7 +146,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
     );
 
     // Define a function to optimize a function of strings
-    m.def("evolve_string", &evolve<std::string>, 
+    m.def("genetic_string", &genetic<std::string>, 
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument

@@ -1,3 +1,11 @@
+Metadata-Version: 2.1
+Name: quickopt
+Version: 0.1.0
+Summary: A Python optimization toolkit focused on nonlocal optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.
+Author: Varun Piram
+Author-email: varunpiram@gmail.com
+Description-Content-Type: text/markdown
+
 # quickopt
 A Python optimization toolkit developed in C++ geared towards nonlocal optimization problems.
 
