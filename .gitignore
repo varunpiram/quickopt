@@ -10,4 +10,7 @@ build/
 dist/
 mypackage.egg-info/
 NOTES.md
+test.py
+include/
+.vscode/
 
