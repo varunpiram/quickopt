@@ -1,0 +1,26 @@
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh; /* Ensure it takes at least the full viewport height */
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}

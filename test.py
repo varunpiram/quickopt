@@ -21,37 +21,15 @@ def test_bayesopt_tpe():
     print("Testing bayesopt_tpe...")
 
     def objective(params):
-        if len(params) < 10 or len(params) > 15:
-            raise ValueError("params must have between 10 and 15 dimensions")
-        
-        # Simulate a complex ecosystem
-        climate_factor = math.sin(params[0] * math.pi) * 100
-        biodiversity = sum(math.exp(-abs(x)) for x in params[1:5]) * 20
-        pollution = sum(x**2 for x in params[5:8]) * 10
-        resource_management = math.prod(1 / (1 + math.exp(-x)) for x in params[8:])
-        
-        # Factors influencing ecosystem health
-        temperature_balance = -abs(climate_factor - 50)
-        species_interactions = biodiversity * resource_management
-        environmental_stress = pollution / (1 + biodiversity)
-        
-        # Calculate ecosystem health score
-        ecosystem_health = (
-            temperature_balance +
-            species_interactions -
-            environmental_stress +
-            resource_management * 100
-        )
-        
-        return float(ecosystem_health)
+        return -sum(x**2 for x in params)
         
     
     
-    lower_bounds = [-1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -5.0, -5.0, -5.0, -5.0]
-    upper_bounds = [1.0, 5.0, 5.0, 5.0, 5.0, 10.0, 10.0, 10.0, 5.0, 5.0, 5.0, 5.0]
+    lower_bounds = [-10.0, -10.0]
+    upper_bounds = [10.0, 10.0]
 
 
-    result = quickopt.bayesopt_tpe(objective, lower_bounds, upper_bounds, iterations=100, samples=500, verbose=1)
+    result = quickopt.bayesopt_tpe(objective, lower_bounds, upper_bounds, iterations=20, samples=50, verbose=1)
     print("Result:", result)
     print("Best value:", objective(result))
 
@@ -78,7 +56,7 @@ def test_pso():
 
 if __name__ == "__main__":
     # test_anneal_double()
-    # test_bayesopt_tpe()
-    test_genetic_double()
+    test_bayesopt_tpe()
+    # test_genetic_double()
     #test_pso()
     # print("All tests passed.")

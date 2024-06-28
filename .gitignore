@@ -8,6 +8,7 @@ __pycache__/
 *.pdb
 build/
 dist/
+.vscode/
 mypackage.egg-info/
 NOTES.md
 
