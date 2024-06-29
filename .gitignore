@@ -9,6 +9,7 @@ __pycache__/
 build/
 dist/
 .vscode/
-mypackage.egg-info/
+quickopt.egg-info/
 NOTES.md
+z-playground/
 
