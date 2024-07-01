@@ -90,7 +90,7 @@ std::vector<T> pso(
         swarm.push_back(Particle(position, velocity, value)); // Add the particle to the swarm
     }
 
-    // Run the optimization
+    // Run the optimization 
     for (int i = 0; i < iterations; ++i){ // For every iteration...
         for (auto& particle : swarm) { // For each particle in the swarm...
             std::vector<T> proposed_velocity; // Create a vector to store the new velocity

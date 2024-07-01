@@ -1,19 +1,18 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
-import sys
-import setuptools
+import os
+import pybind11
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path.
     The purpose of this class is to postpone importing pybind11
     until it is actually installed, so that the ``get_include()``
-    method can be invoked. """
-    
+    method can be invoked."""
+
     def __init__(self, user=False):
         self.user = user
 
     def __str__(self):
-        import pybind11
         return pybind11.get_include(self.user)
 
 ext_modules = [
@@ -23,8 +22,6 @@ ext_modules = [
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "/Users/varunpiram/miniconda3/include/python3.9",
-            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
         language='c++',
         extra_compile_args=['-std=c++17'],
@@ -35,8 +32,6 @@ ext_modules = [
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "/Users/varunpiram/miniconda3/include/python3.9",
-            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
         depends=['src/common.cpp'],
         language='c++',
@@ -48,8 +43,6 @@ ext_modules = [
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "/Users/varunpiram/miniconda3/include/python3.9",
-            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
         depends=['src/common.cpp'],
         language='c++',
@@ -61,8 +54,6 @@ ext_modules = [
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "/Users/varunpiram/miniconda3/include/python3.9",
-            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
         depends=['src/common.cpp'],
         language='c++',
@@ -74,8 +65,6 @@ ext_modules = [
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
-            "/Users/varunpiram/miniconda3/include/python3.9",
-            "/Users/varunpiram/miniconda3/lib/python3.9/site-packages/pybind11/include"
         ],
         depends=['src/common.cpp'],
         language='c++',

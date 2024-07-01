@@ -36,7 +36,7 @@ def generate():
 
 Finally, we run our genetic algorithm. We choose to run the algorithm for 10 generations, with 50 candidate solutions in each, using 5 parents and implementing elitism with 5 survivors:
 ```python
-result = quickopt.genetic_double(objective, mutate, generate, generations=10, population_size=50, reproduction_ct=5, survivor_ct=5, verbose=1)
+result = quickopt.genetic_double(fitness=objective, mutate=mutate, generate=generate, generations=10, population_size=50, reproduction_ct=5, survivor_ct=5, verbose=1)
 ```
 
 The following is a heatmap of the optimization process, with each point representing a new optimal solution found by the algorithm:
