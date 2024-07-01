@@ -1,0 +1,8 @@
+{
+  "label": "Particle Swarm Optimization",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentation for the pso function"
+  }
+}

@@ -21,7 +21,7 @@ std::vector<double> bayesopt_tpe(
     int samples = 10, // Number of samples to draw per iteration
     int acquisition_samples = 100, // Number of samples to draw for acquisition function maximization
     int verbose = 1, // Verbosity level - 0 for final output, 1 for output at each iteration
-    double threshold = 0.5, // Threshold value for the splitting function - unneccesary if split is provided
+    double threshold = 0.5, // Threshold value for the splitting function - unnecessary if split is provided
     int group_cap = 9999, // Group cap for the good set
     std::vector<double> bandwidth = std::vector<double>(), // Optional bandwidth vector for the KDE (overrides dynamic bandwidth calculation)
     int prior_weight = 1, // Prior weight parameter for Non-Informative Prior
@@ -155,7 +155,7 @@ std::vector<double> bayesopt_tpe(
 
 
     auto weight = [&denom_weight](bool isGood, std::vector<Candidate>& good, std::vector<Candidate>& bad, Candidate& c) -> double { // Define a lambda function to calculate the weight of a candidate
-    // This weight is based on the expected improvement acqusition function shown in Song et al. 2022
+    // This weight is based on the expected improvement acquisition function shown in Song et al. 2022
 
         if (!isGood) { // If the candidate is in the bad set...
             return 1.0 / (bad.size() + 1); // Return the weight scaled by the size of the bad set
@@ -167,7 +167,7 @@ std::vector<double> bayesopt_tpe(
     };
 
     auto weight_base = [&denom_weight](std::vector<Candidate>& good) -> double { // Define a lambda function to calculate the weight for the zeroth basis in the KDE
-    // This weight is based on the expected improvement acqusition function shown in Song et al. 2022
+    // This weight is based on the expected improvement acquisition function shown in Song et al. 2022
 
         double baseweight = 0; // Initialize the base weight to zero
 
@@ -296,7 +296,7 @@ std::vector<double> bayesopt_tpe(
         if (dynam) { // If dynamic bandwidth is enabled...
             for (size_t i = 0; i < space_min.size(); i++) {  // For each dimension...
                 bandwidth[i] = ((space_max[i] - space_min[i]) / 5.0) * (pow(dataset.size(), (-1.0 / (space_min.size() + 4)))); // Update the bandwidth
-                // // This calculation is based on the heuristic in appendix C.3.3 of Watanbe 2023
+                // // This calculation is based on the heuristic in appendix C.3.3 of Watanabe 2023
             }
         }
     }

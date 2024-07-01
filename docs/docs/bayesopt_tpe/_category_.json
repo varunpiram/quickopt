@@ -1,0 +1,8 @@
+{
+  "label": "Bayesian Optimization w/ TPE",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentation for the bayesopt_tpe function"
+  }
+}

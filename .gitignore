@@ -8,10 +8,10 @@ __pycache__/
 *.pdb
 build/
 dist/
-mypackage.egg-info/
-NOTES.md
-test.py
 .vscode/
-include/
-
-
+quickopt.egg-info/
+NOTES.md
+z-playground/
+docs/quickopt-img/
+docs/build/
+docs/node_modules/

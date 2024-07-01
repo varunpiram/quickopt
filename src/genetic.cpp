@@ -8,9 +8,9 @@
 
 namespace py = pybind11;
 
-// Evolutionary algorithm function
+// Genetic algorithm function
 template <typename T>
-std::vector<T> evolve(
+std::vector<T> genetic(
     py::function fitness, // Fitness function - takes in a set of parameters and returns a fitness value
     py::function mutate,  // Mutation function - takes in a set of parameters and returns a mutated set of parameters
     py::function generate, // Generate function - generates a set of parameters to be used in the initial population (ideally randomly)
@@ -93,7 +93,12 @@ std::vector<T> evolve(
         while (children.size() < (population_size - survivor_ct)) { // While the children vector is not full...
             int father_idx = dist(rng) % reproduction_ct; // Randomly select an index to get a father
             int mother_idx = dist(rng) % reproduction_ct; // Randomly select an index to get a mother
-            children.emplace_back(crossover(parents[father_idx], parents[mother_idx]), fitness); // Adds a child to the children vector by crossing over the selected parents
+            std::vector<T> new_params = crossover(parents[father_idx], parents[mother_idx]);
+            if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < mutation_rate) { // If the random number is less than the mutation rate...
+                new_params = mutate(new_params).template cast<std::vector<T>>(); // Mutate the child's parameters
+            }
+
+            children.emplace_back(new_params, fitness); // Adds a child to the children vector by crossing over the selected parents
         }
 
         std::vector<Individual> survivors(population.begin(), population.begin() + survivor_ct); // Select the top individuals to be survivors based on survivor_ct
@@ -103,20 +108,14 @@ std::vector<T> evolve(
         population.insert(population.end(), survivors.begin(), survivors.end()); // Add in survivors to the population
         population.insert(population.end(), children.begin(), children.end()); // Add in children to the population
 
-        for (auto& ind : population) { // For each individual in the population...
-            if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < mutation_rate) { // If the random number is less than the mutation rate...
-                ind.params = mutate(ind.params).template cast<std::vector<T>>(); // Mutate the individual's parameters
-                ind.fitness_value = fitness(ind.params).template cast<double>(); // Update the fitness value of the individual
-            }
-        }
     }
 
     return population[0].params; // Return the parameters of the top individual in the final population
 }
 
-PYBIND11_MODULE(evolution, m) { // Define the Python module
+PYBIND11_MODULE(genetic, m) { // Define the Python module
     // Define a function to optimize a function of doubles
-    m.def("evolve_double", &evolve<double>,
+    m.def("genetic_double", &genetic<double>,
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
@@ -131,7 +130,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
     );
 
     // Define a function to optimize a function of integers
-    m.def("evolve_int", &evolve<int>,
+    m.def("genetic_int", &genetic<int>,
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
@@ -146,7 +145,7 @@ PYBIND11_MODULE(evolution, m) { // Define the Python module
     );
 
     // Define a function to optimize a function of strings
-    m.def("evolve_string", &evolve<std::string>, 
+    m.def("genetic_string", &genetic<std::string>, 
         py::arg("fitness"), // Define the fitness function argument
         py::arg("mutate"), // Define the mutation function argument
         py::arg("generate"), // Define the generation function argument
