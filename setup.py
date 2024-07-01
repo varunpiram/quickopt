@@ -88,7 +88,7 @@ setup(
     version='0.1.0',
     author='Varun Piram',
     author_email='varunpiram@gmail.com',
-    description='A Python optimization toolkit focused on nonlocal optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',
+    description='A Python optimization toolkit focused on global optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     ext_modules=ext_modules,

@@ -13,7 +13,7 @@ We implement the McCormick function as follows:
 import numpy as np
 def objective(params):
     x, y = params
-    return = np.sin(x + y) + (x - y)**2 - 1.5*x + 2.5*y + 1
+    return np.sin(x + y) + (x - y)**2 - 1.5*x + 2.5*y + 1
 ```
 
 We then define our search space:
@@ -24,11 +24,11 @@ upper_bounds = [4, 4]
 
 Finally, we run our bayesian optimization algorithm. We choose to run the algorithm for only 20 iterations, with 50 initial samples:
 ```python
-result = quickopt.bayesopt_tpe(objective, lower_bounds, upper_bounds, iterations=20, samples=50, verbose=1)
+result = quickopt.bayesopt_tpe(objective=objective, space_min=lower_bounds, space_max=upper_bounds, iterations=20, samples=50, verbose=1)
 ```
 
 The following is a heatmap of the optimization process, with each point representing a new optimal solution found by the algorithm:
 
-![Simulated Annealing Optimization Heatmap](mc-bayesopt_tpe.png)
+![Bayesian Optimization w/ TPE Heatmap](mc-bayesopt_tpe.png)
 
 

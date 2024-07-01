@@ -93,7 +93,12 @@ std::vector<T> genetic(
         while (children.size() < (population_size - survivor_ct)) { // While the children vector is not full...
             int father_idx = dist(rng) % reproduction_ct; // Randomly select an index to get a father
             int mother_idx = dist(rng) % reproduction_ct; // Randomly select an index to get a mother
-            children.emplace_back(crossover(parents[father_idx], parents[mother_idx]), fitness); // Adds a child to the children vector by crossing over the selected parents
+            std::vector<T> new_params = crossover(parents[father_idx], parents[mother_idx]);
+            if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < mutation_rate) { // If the random number is less than the mutation rate...
+                new_params = mutate(new_params).template cast<std::vector<T>>(); // Mutate the child's parameters
+            }
+
+            children.emplace_back(new_params, fitness); // Adds a child to the children vector by crossing over the selected parents
         }
 
         std::vector<Individual> survivors(population.begin(), population.begin() + survivor_ct); // Select the top individuals to be survivors based on survivor_ct
@@ -103,12 +108,6 @@ std::vector<T> genetic(
         population.insert(population.end(), survivors.begin(), survivors.end()); // Add in survivors to the population
         population.insert(population.end(), children.begin(), children.end()); // Add in children to the population
 
-        for (auto& ind : population) { // For each individual in the population...
-            if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < mutation_rate) { // If the random number is less than the mutation rate...
-                ind.params = mutate(ind.params).template cast<std::vector<T>>(); // Mutate the individual's parameters
-                ind.fitness_value = fitness(ind.params).template cast<double>(); // Update the fitness value of the individual
-            }
-        }
     }
 
     return population[0].params; // Return the parameters of the top individual in the final population

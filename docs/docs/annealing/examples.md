@@ -13,7 +13,7 @@ We implement the McCormick function as follows:
 import numpy as np
 def objective(params):
     x, y = params
-    return = np.sin(x + y) + (x - y)**2 - 1.5*x + 2.5*y + 1
+    return np.sin(x + y) + (x - y)**2 - 1.5*x + 2.5*y + 1
 ```
 
 We then set our initial guess to the center of the search space:
@@ -23,6 +23,7 @@ initial_guess = [1.25, 0.5]
 
 We define our neighbor function to perturb our current solution by a random normal variable with mean 0 and standard deviation 1:
 ```python
+import random
 def neighbor(params):
     new_params = params[:]
     index = random.randint(0, len(params) - 1)
@@ -32,7 +33,7 @@ def neighbor(params):
     return new_params
 ```
 
-Finally, we run the simulated annealing algorithm. We choose to run the algorithm for 200 iterations:
+Finally, we run the simulated annealing algorithm. We choose to run the algorithm for 200 iterations, alongside the default temperature schedule:
 ```python
 result = quickopt.anneal_double(funct=objective, initial=initial_guess, neighbor=neighbor, iterations=200, verbose=0)
 ```

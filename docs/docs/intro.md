@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Description
 
-`quickopt` is a Python optimization toolkit developed in C++ geared towards nonlocal optimization problems, such as those encountered in hyperparameter tuning. 
+`quickopt` is a Python optimization toolkit developed in C++ geared towards optimization problems of multimodal functions, such as those encountered in hyperparameter tuning. 
 
 It contains a variety of optimization algorithms, which are listed below. 
 

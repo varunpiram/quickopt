@@ -1,5 +1,5 @@
 """
-A Python optimization toolkit focused on nonlocal optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.
+A Python optimization toolkit focused on global optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.
 """
 
 __version__ = '0.1.0'

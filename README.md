@@ -1,5 +1,5 @@
 # _quickopt_
-A Python optimization toolkit developed in C++ geared towards nonlocal optimization problems.
+A Python optimization toolkit developed in C++ geared towards multimodal functions.
 
 # Documentation: [Click Here!](https://google.com)
 Most of the information is found in the documentation - please refer to it! Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here.
@@ -11,7 +11,7 @@ pip install quickopt
 ```
 
 ## Description
-This package is a Python optimization toolkit developed in C++ geared towards nonlocal optimization problems, such as those encountered in hyperparameter tuning. It contains a variety of optimization algorithms, which are listed below. The package is designed to be easy to use and flexible, allowing users to use popular optimization methods out of the box in as little as one line of code, while also allowing users to customize the optimization process to suit their needs. A list of the optimization algorithms included in the package is provided below:
+This package is a Python optimization toolkit developed in C++ geared towards global optimization problems, such as those encountered in hyperparameter tuning. It contains a variety of optimization algorithms, which are listed below. The package is designed to be easy to use and flexible, allowing users to use popular optimization methods out of the box in as little as one line of code, while also allowing users to customize the optimization process to suit their needs. A list of the optimization algorithms included in the package is provided below:
 
 - Simulated Annealing: Compatible with `string`, `double`, and `integer` inputs
 

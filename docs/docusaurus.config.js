@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'quickopt',
-  tagline: 'A Python optimization toolkit developed in C++ geared towards nonlocal optimization problems.',
+  tagline: 'A Python optimization toolkit developed in C++ geared towards global optimization problems.',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
