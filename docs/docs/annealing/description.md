@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Description
 
+Test
+
 Simulated annealing is an optimization algorithm designed to find a global minimum in a large search space, particularly when the function to be minimized has many local minima. The technique is inspired by the annealing process in metallurgy, where a material is heated and then slowly cooled to remove defects and achieve a more stable structure.
 
 ### Overview

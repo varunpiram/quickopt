@@ -15,3 +15,6 @@ z-playground/
 docs/quickopt-img/
 docs/build/
 docs/node_modules/
+include/
+
+node_modules
