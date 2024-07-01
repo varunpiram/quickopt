@@ -17,5 +17,14 @@ pip install -e .
 ## Rebuild the extensions in place
 python setup.py build_ext --inplace
 
+# To update website:
+
+Commit and push changes to the `main` branch on github
+
+Navigate to the `docs` folder on `main`
+
+Run the following command:
+`npm run deploy`
+
 
 
