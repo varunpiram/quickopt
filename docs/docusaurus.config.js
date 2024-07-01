@@ -12,10 +12,10 @@ const config = {
   tagline: 'A Python optimization toolkit developed in C++ geared towards global optimization problems.',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://varunpiram.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/quickopt/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
