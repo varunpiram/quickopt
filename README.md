@@ -1,4 +1,4 @@
-# _quickopt_
+# quickopt
 A Python optimization toolkit developed in C++ geared towards multimodal functions.
 
 # Documentation: [Click Here!](https://google.com)
