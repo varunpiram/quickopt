@@ -1,7 +1,7 @@
 # quickopt
 A Python optimization toolkit developed in C++ geared towards multimodal functions.
 
-# Documentation: [Click Here!](https://google.com)
+# Documentation: [Click Here!](https://varunpiram.github.io/quickopt/)
 **Most of the information is found in the documentation** - please refer to it! _Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here._
 
 ## Installation
