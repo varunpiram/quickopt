@@ -43,6 +43,7 @@ genetic_double(fitness, mutate, generate, seed=[], population_size=100, reproduc
 
 ### Notes
 
+- Minimization can be achieved by returning the negative of objective function values.
 - Ensure `reproduction_ct` is not greater than `population_size`.
 - Search space boundaries should be implicitly defined within `generate` and `mutate` functions.
 - The `generate` function should handle boundary conditions if necessary.
@@ -86,6 +87,7 @@ genetic_int(fitness, mutate, generate, seed=[], population_size=100, reproductio
 
 ### Notes
 
+- Minimization can be achieved by returning the negative of objective function values.
 - Ensure `reproduction_ct` is not greater than `population_size`.
 - Search space boundaries should be implicitly defined within `generate` and `mutate` functions.
 - The `generate` function should handle boundary conditions if necessary.
@@ -129,6 +131,7 @@ genetic_string(fitness, mutate, generate, seed=[], population_size=100, reproduc
 
 ### Notes
 
+- Minimization can be achieved by returning the negative of objective function values.
 - Ensure `reproduction_ct` is not greater than `population_size`.
 - Search space boundaries should be implicitly defined within `generate` and `mutate` functions.
 - The `generate` function should handle boundary conditions if necessary.

@@ -8,7 +8,7 @@ Bayesian Optimization with Tree-structured Parzen Estimator (TPE) is a sequentia
 
 ### Overview
 
-1. **Objective Function**: The function we aim to minimize. This function takes a set of parameters and returns a numerical value.
+1. **Objective Function**: The function we aim to minimize. This function takes a set of double parameters and returns a numerical value.
 
 2. **Search Space**: Defined explicitly by upper and lower bound vectors. Each dimension of these vectors represents a different parameter, and the bounds define the range within which the algorithm searches for the optimal solution.
 

@@ -11,7 +11,7 @@
 
 namespace py = pybind11;
 
-// Simulated particle swarm optimization function - ONLY WORKS FOR DOUBLES! Can modify eventually if needed!
+// Simulated particle swarm optimization function - ONLY WORKS FOR DOUBLES!
 template <typename T>
 std::vector<T> pso(
     py::function funct, // The function to be *maximized*

@@ -12,4 +12,6 @@ dist/
 quickopt.egg-info/
 NOTES.md
 z-playground/
-
+docs/quickopt-img/
+docs/build/
+docs/node_modules/

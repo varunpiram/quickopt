@@ -2,7 +2,7 @@
 A Python optimization toolkit developed in C++ geared towards multimodal functions.
 
 # Documentation: [Click Here!](https://google.com)
-Most of the information is found in the documentation - please refer to it! Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here.
+**Most of the information is found in the documentation** - please refer to it! _Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here._
 
 ## Installation
 To install the package using PyPi, run the following command:
@@ -42,6 +42,20 @@ print(result)
 Note that some functions have different definitions dependant on variable type. For example, the Simulated Annealing algorithm has different functions for double, integer, and string inputs. The functions are named `anneal_double`, `anneal_int`, and `anneal_string`, respectively. Objective functions must take in inputs as a list, as shown above.
 
 ## References:
+
+Kirkpatrick, S., C. D. Gelatt, and M. P. Vecchi. 1983. “Optimization by Simulated Annealing.” Science 220 (4598): 671–80. https://doi.org/10.1126/science.220.4598.671.
+
+Shuhei Watanabe, “Tree-Structured Parzen Estimator: Understanding Its Algorithm Components and Their Roles for Better Empirical Performance,” arXiv (Cornell University), January 1, 2023, https://doi.org/10.48550/arxiv.2304.11127.
+
+Bergstra, James, Dan Yamins, and David D. Cox. “Making a Science of Model Search.” arXiv (Cornell University), January 1, 2012. https://doi.org/10.48550/arxiv.1209.5111.
+
+Song, Jiaming, Lantao Yu, Willie Neiswanger, and Stefano Ermon. “A General Recipe for Likelihood-free Bayesian Optimization.” arXiv (Cornell University), January 1, 2022. https://doi.org/10.48550/arxiv.2206.13035.
+
+Falkner, Stefan, Aaron Klein, and Frank Hutter. “BOHB: Robust and Efficient Hyperparameter Optimization at Scale.” arXiv (Cornell University), January 1, 2018. https://doi.org/10.48550/arxiv.1807.01774.
+
+Baluja, Shumeet, and Rich Caruana. 1995. “Removing the Genetics From the Standard Genetic Algorithm.” In Elsevier eBooks, 38–46. https://doi.org/10.1016/b978-1-55860-377-6.50014-1.
+
+Bonyadi, Mohammad Reza, and Zbigniew Michalewicz. 2017. “Particle Swarm Optimization for Single Objective Continuous Space Problems: A Review.” Evolutionary Computation 25 (1): 1–54. https://doi.org/10.1162/evco_r_00180.
 
 ## More
 Contact: `varunpiram@gmail.com`
