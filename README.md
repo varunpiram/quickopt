@@ -1,5 +1,11 @@
 # quickopt
-A Python optimization toolkit developed in C++ geared towards multimodal functions.
+A Python optimization toolkit developed in C++ geared towards multimodal functions, including efficient implementations of Bayesian Optimization with Tree-structured Parzen estimators, Particle Swarm Optimization, and more.
+
+![Bayesian Optimization w/ TPE Heatmap](resources/bayesopt_tpe.png)
+*Optimization Process of Bayesian Optimization w/ TPE on the McCormick Function*
+
+![Genetic Algorithm w/ TPE Heatmap](resources/genetic.png)
+*Optimization Process of a Genetic Algorithm on the McCormick Function*
 
 # Documentation: [Click Here!](https://varunpiram.github.io/quickopt/)
 **Most of the information is found in the documentation** - please refer to it! _Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here._
@@ -55,6 +61,8 @@ Falkner, Stefan, Aaron Klein, and Frank Hutter. “BOHB: Robust and Efficient Hy
 Baluja, Shumeet, and Rich Caruana. 1995. “Removing the Genetics From the Standard Genetic Algorithm.” In Elsevier eBooks, 38–46. https://doi.org/10.1016/b978-1-55860-377-6.50014-1.
 
 Bonyadi, Mohammad Reza, and Zbigniew Michalewicz. 2017. “Particle Swarm Optimization for Single Objective Continuous Space Problems: A Review.” Evolutionary Computation 25 (1): 1–54. https://doi.org/10.1162/evco_r_00180.
+
+_Detailed references can be found within documentation._
 
 ## More
 Contact: `varunpiram@gmail.com`
