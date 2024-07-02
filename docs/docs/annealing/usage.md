@@ -3,6 +3,10 @@ sidebar_position: 1
 ---
 
 # Usage
+## Import
+```python
+from quickopt.annealing import anneal_double, anneal_int, anneal_string
+```
 
 ## `anneal_double`
 

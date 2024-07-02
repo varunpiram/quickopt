@@ -23,7 +23,8 @@ space_max = [4, 4]
 
 Finally, we run our particle swarm optimization. We choose to run the algorithm for 10 iterations, with a swarm size of 50 particles, alongside the default inertia, cognitive, and social weights, as well as the default velocity clamping of `0.1`:
 ```python
-result = quickopt.pso(funct=objective, space_min=space_min, space_max=space_max, iterations=10, swarm_size=50, verbose=1)
+from quickopt.pso import pso
+result = pso(funct=objective, space_min=space_min, space_max=space_max, iterations=10, swarm_size=50, verbose=1)
 ```
 
 The following is a heatmap of the optimization process, with each point representing a new optimal solution found by the algorithm:

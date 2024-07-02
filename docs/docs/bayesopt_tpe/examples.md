@@ -24,7 +24,8 @@ upper_bounds = [4, 4]
 
 Finally, we run our bayesian optimization algorithm. We choose to run the algorithm for only 20 iterations, with 50 initial samples:
 ```python
-result = quickopt.bayesopt_tpe(funct=objective, space_min=lower_bounds, space_max=upper_bounds, iterations=20, samples=50, verbose=1)
+from quickopt.bayesopt_tpe import bayesopt_tpe
+result = bayesopt_tpe(funct=objective, space_min=lower_bounds, space_max=upper_bounds, iterations=20, samples=50, verbose=1)
 ```
 
 The following is a heatmap of the optimization process, with each point representing a new optimal solution found by the algorithm:
