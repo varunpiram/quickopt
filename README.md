@@ -1,11 +1,20 @@
 # quickopt
 A Python optimization toolkit developed in C++ geared towards multimodal functions, including efficient implementations of Bayesian Optimization with Tree-structured Parzen estimators, Particle Swarm Optimization, and more.
 
-![Bayesian Optimization w/ TPE Heatmap](resources/bayesopt_tpe.png)
-*Optimization Process of Bayesian Optimization w/ TPE on the McCormick Function*
 
-![Genetic Algorithm w/ TPE Heatmap](resources/genetic.png)
-*Optimization Process of a Genetic Algorithm on the McCormick Function*
+<div style="display: flex; justify-content: space-around; align-items: center;">
+
+  <div style="text-align: center; margin: 10px;">
+    <img src="resources/bayesopt_tpe.png" alt="Bayesian Optimization w/ TPE Heatmap" style="width: 400px; height: 300px;">
+    <p style="font-size: small;">Optimization Process of Bayesian Optimization w/ TPE on the McCormick Function</p>
+  </div>
+
+  <div style="text-align: center; margin: 10px;">
+    <img src="resources/genetic.png" alt="Genetic Algorithm w/ TPE Heatmap" style="width: 400px; height: 300px;">
+    <p style="font-size: small;">Optimization Process of Genetic Algorithm on the McCormick Function</p>
+  </div>
+
+</div>
 
 # Documentation: [Click Here!](https://varunpiram.github.io/quickopt/)
 **Most of the information is found in the documentation** - please refer to it! _Tutorials, examples, descriptions/breakdowns of algorithms, and references are found here._
