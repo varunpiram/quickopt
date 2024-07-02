@@ -35,7 +35,8 @@ def neighbor(params):
 
 Finally, we run the simulated annealing algorithm. We choose to run the algorithm for 200 iterations, alongside the default temperature schedule:
 ```python
-result = quickopt.anneal_double(funct=objective, initial=initial_guess, neighbor=neighbor, iterations=200, verbose=0)
+from quickopt.annealing import anneal_double
+result = anneal_double(funct=objective, initial=initial_guess, neighbor=neighbor, iterations=200, verbose=0)
 ```
 
 The following is a heatmap of the optimization process, with each point representing a new optimal solution found by the algorithm:

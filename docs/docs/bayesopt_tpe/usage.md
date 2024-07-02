@@ -3,6 +3,10 @@ sidebar_position: 1
 ---
 
 # Usage
+## Import
+```python
+from quickopt.bayesopt_tpe import bayesopt_tpe
+```
 
 ## `bayesopt_tpe`
 

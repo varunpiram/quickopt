@@ -1,12 +1,11 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
-import os
 import pybind11
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path.
     The purpose of this class is to postpone importing pybind11
-    until it is actually installed, so that the ``get_include()``
+    until it is actually installed, so that the `get_include()`
     method can be invoked."""
 
     def __init__(self, user=False):
@@ -74,7 +73,7 @@ ext_modules = [
 
 setup(
     name='quickopt',
-    version='0.1.0',
+    version='0.1.5',
     author='Varun Piram',
     author_email='varunpiram@gmail.com',
     description='A Python optimization toolkit focused on global optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',

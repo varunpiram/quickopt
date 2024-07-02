@@ -3,6 +3,10 @@ sidebar_position: 2
 ---
 
 # Usage
+## Import
+```python
+from quickopt.pso import pso
+```
 
 ## `pso`
 

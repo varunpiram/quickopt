@@ -3,6 +3,11 @@ sidebar_position: 1
 ---
 
 # Usage
+## Import
+```python
+from quickopt.genetic import genetic_double, genetic_int, genetic_string
+```
+
 
 ## `genetic_double`
 

@@ -1,0 +1,7 @@
+include README.md
+include setup.py
+include LICENSE
+
+graft src
+graft quickopt
+
