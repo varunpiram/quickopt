@@ -1,4 +1,6 @@
 # quickopt
+[![Downloads](https://static.pepy.tech/badge/quickopt)](https://pepy.tech/project/quickopt)
+
 A Python optimization toolkit developed in C++ geared towards multimodal functions, including efficient implementations of Bayesian Optimization with Tree-structured Parzen estimators, Particle Swarm Optimization, and more.
 
 ![Optimization Visuals](resources/images1.png)
