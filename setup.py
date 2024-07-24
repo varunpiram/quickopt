@@ -73,7 +73,7 @@ ext_modules = [
 
 setup(
     name='quickopt',
-    version='0.1.7',
+    version='0.1.8',
     author='Varun Piram',
     author_email='varunpiram@gmail.com',
     description='A Python optimization toolkit focused on global optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',
