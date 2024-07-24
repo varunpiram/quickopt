@@ -28,7 +28,7 @@ bayesopt_tpe(funct, space_min, space_max, iterations=100, samples=10, acquisitio
 
 - `iterations` - **int**, ___optional___ : The number of iterations to run the algorithm. Default is 100.
 
-- `samples` - **int**, ___optional___ : The number of samples to draw per iteration. Default is 10.
+- `samples` - **int**, ___optional___ : The number of samples to draw initially. Default is 10.
 
 - `acquisition_samples` - **int**, ___optional___ : The number of samples to draw for acquisition function maximization. Default is 100.
 

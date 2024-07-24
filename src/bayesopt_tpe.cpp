@@ -18,7 +18,7 @@ std::vector<double> bayesopt_tpe(
     std::vector<double> space_min, // Lower bound vector for the search space
     std::vector<double> space_max, // Upper bound vector for the search space
     int iterations = 100, // Number of iterations to run the algorithm for
-    int samples = 10, // Number of samples to draw per iteration
+    int samples = 10, // Number of samples to draw initially
     int acquisition_samples = 100, // Number of samples to draw for acquisition function maximization
     int verbose = 1, // Verbosity level - 0 for final output, 1 for output at each iteration
     double threshold = 0.5, // Threshold value for the splitting function - unnecessary if split is provided
