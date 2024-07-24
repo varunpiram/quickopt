@@ -77,7 +77,7 @@ setup(
     author='Varun Piram',
     author_email='varunpiram@gmail.com',
     description='A Python optimization toolkit focused on global optimization problems, featuring simple and customizable setup of various optimization algorithms implemented in C++.',
-    long_description=open('README.md').read(),
+    long_description=open('PyPi.md').read(),
     long_description_content_type='text/markdown',
     ext_modules=ext_modules,
     install_requires=[
